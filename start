@@ -13,8 +13,4 @@ else
     echo "starting Hannibal on Port $HANNIBAL_HTTP_PORT (as defined by HANNIBAL_HTTP_PORT)"
 fi
 
-if [ -d $dir/target ]; then
-    java -jar $dir/sbt-launch-0.11.3.jar -DapplyEvolutions.default=true "start $HANNIBAL_HTTP_PORT"
-else
-    echo "The project has not yet been built, please run './build' first"
-fi
+$dir/activator "start -DapplyEvolutions.default=true $HANNIBAL_HTTP_PORT"

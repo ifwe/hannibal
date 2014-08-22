@@ -3,10 +3,11 @@
  */
 package controllers
 
+import play.api.libs.json._
 import play.api.mvc._
 import play.api.libs.json.Json._
-import models.{MetricDef, Table}
-import com.codahale.jerkson.Json._
+import models._
+import models.JsonConversions._
 import java.util.concurrent.TimeUnit
 import play.api.Play
 
@@ -14,15 +15,15 @@ object Api extends Controller {
 
   def heartbeat() = Action { implicit request =>
     val heartBeatOk = toJson(Map("status" -> "OK"))
-    Ok(heartBeatOk).as(JSON)
+    Ok(heartBeatOk)
   }
 
   def tables() = Action { implicit request =>
-    Ok(generate(Table.all())).as(JSON)
+    Ok(Json.toJson(Table.all()))
   }
 
   def regions() = Action { implicit request =>
-    val tables = request.queryString.get("table").flatten.toSet
+    val tables = request.queryString.get("table").toList.flatten.toSet
 
     val regions = if(tables.isEmpty) {
       models.Region.all()
@@ -32,7 +33,7 @@ object Api extends Controller {
       } flatten
     }
 
-    Ok(generate(regions)).as(JSON)
+    Ok(Json.toJson(regions))
   }
 
   def metrics() = Action { implicit request =>
@@ -44,7 +45,7 @@ object Api extends Controller {
         metricDef.metric(since, until)
       }
     }
-    Ok(generate(metrics.flatten)).as(JSON)
+    Ok(Json.toJson(metrics.flatten))
   }
 
   def metricsByTarget(target: String) = Action { implicit request =>
@@ -55,7 +56,7 @@ object Api extends Controller {
       MetricDef.findRegionMetricDef(target, metricName).metric(since, until)
     }
 
-    Ok(generate(metrics)).as(JSON)
+    Ok(Json.toJson(metrics))
   }
 
   def parseMetricNames(implicit request: Request[_]) =

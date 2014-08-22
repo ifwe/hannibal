@@ -1,6 +1,7 @@
 @(longestCompactionString:String)(implicit request: play.api.mvc.Request[_])
 
 @import java.text.DateFormat
+@import play.api.libs.json.Json
 
 @includes = {
   <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/metric_chart_view.css")'>
@@ -13,7 +14,7 @@
 }
 
 @clusterMetricChart(metricNames: Seq[String]) = {
-    <div class="metric-chart-view compaction-metric-chart-view" data-metric-names="@com.codahale.jerkson.Json.generate(metricNames)">
+    <div class="metric-chart-view compaction-metric-chart-view" data-metric-names="@Json.toJson(metricNames)">
         <div class="x-axis"></div>
         <div class="chart"></div>
         <div class="legend-container">

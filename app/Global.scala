@@ -18,16 +18,16 @@ object Global extends GlobalSettings {
     apiVersions.foreach { hbaseContext:String =>
       if(globals.hBaseContext == null) {
         try {
-          Logger.debug("Try to intanciate api-wrapper %s".format(hbaseContext));
+          Logger.debug("Try to instantiate api-wrapper %s".format(hbaseContext));
           globals.hBaseContext = Class.forName(hbaseContext).newInstance.asInstanceOf[HBaseContext]
         } catch {
           case e: java.lang.ClassNotFoundException =>
-            Logger.debug("Instanciating api-wrapper %s failed ".format(hbaseContext));
+            Logger.debug("Instantiating api-wrapper %s failed ".format(hbaseContext));
         }
       }
     }
     if(globals.hBaseContext == null) {
-      Logger.error("Could not instanciate any api wrapper, Hannibal will now exit");
+      Logger.error("Could not instantiate any api wrapper, Hannibal will now exit");
       System.exit(1);
     }
 

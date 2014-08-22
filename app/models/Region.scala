@@ -5,12 +5,11 @@
 package models
 
 import org.apache.hadoop.hbase.util.Bytes
-import org.apache.hadoop.hbase.{HRegionInfo}
-import scala.collection.mutable.ListBuffer
+import org.apache.hadoop.hbase.{TableName, HRegionInfo}
 import play.api.Logger
 import org.codehaus.jackson.annotate.JsonIgnoreProperties
 import scala.collection._
-import play.api.libs.json.{JsObject, Writes}
+import play.api.libs.json.Writes
 import play.api.libs.json.Json._
 import models.hbase.{RegionLoad, RegionServer}
 import globals.hBaseContext
@@ -52,7 +51,7 @@ case class Region(val regionServer: RegionServer, val regionLoad: RegionLoad) {
   lazy val info: RegionInfo = {
     val hRegionInfo =
       hBaseContext.hBase
-        .withAdmin { _.getConnection.getRegionLocation(Bytes.toBytes(tableName), parsedElements(1), false)}
+        .withAdmin { _.getConnection.getRegionLocation(TableName.valueOf(Bytes.toBytes(tableName)), parsedElements(1), false)}
         .getRegionInfo
     RegionInfo(hRegionInfo)
   }

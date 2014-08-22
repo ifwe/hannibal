@@ -1,9 +1,11 @@
 @(table: Table)(implicit request: play.api.mvc.Request[_])
 
 @import helpers.Referer
+@import models.JsonConversions._
+@import play.api.libs.json.Json
 
 @tableRegionsChart() = {
-    <div class="table-regions-chart-view" data-table="@com.codahale.jerkson.Json.generate(table)">
+    <div class="table-regions-chart-view" data-table="@Json.toJson(table)">
         <div class="y-axis"></div>
         <div class="x-axis"></div>
         <div class="chart"></div>
