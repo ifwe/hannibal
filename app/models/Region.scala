@@ -7,7 +7,6 @@ package models
 import org.apache.hadoop.hbase.util.Bytes
 import org.apache.hadoop.hbase.{TableName, HRegionInfo}
 import play.api.Logger
-import org.codehaus.jackson.annotate.JsonIgnoreProperties
 import scala.collection._
 import play.api.libs.json.Writes
 import play.api.libs.json.Json._
@@ -18,7 +17,6 @@ import play.api.Play.current
 import play.api.libs.json.JsObject
 
 
-@JsonIgnoreProperties(Array("parsedRegionName", "regionServer", "regionLoad", "info"))
 case class Region(val regionServer: RegionServer, val regionLoad: RegionLoad) {
 
   val regionName        = Bytes.toStringBinary(regionLoad.name)

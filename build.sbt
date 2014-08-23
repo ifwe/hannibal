@@ -18,7 +18,6 @@ libraryDependencies ++= {
     anorm,
     cache,
     ws,
-    "org.codehaus.jackson" % "jackson-core-asl" % "1.9.13",
     "org.apache.hadoop" % "hadoop-common" % hadoopV,
     "org.apache.hbase" % "hbase"        % hbaseV,
     "org.apache.hbase" % "hbase-common" % hbaseV,
