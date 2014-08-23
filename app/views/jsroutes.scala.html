@@ -27,7 +27,7 @@
 
     function route(u) {
         return function(options, suffix) {
-            var url = u;
+            var url = decodeURIComponent(u);
             options = options || {}
             for (key in options) {
                 if (url.indexOf("%" + key + "%") > -1) {
